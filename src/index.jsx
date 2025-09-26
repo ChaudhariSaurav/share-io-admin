@@ -1,9 +1,10 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./App.css";
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+import MainLayout from "./Layout/mainLayout";
+ReactDOM.createRoot(document.getElementById("root")).render(
 	<React.StrictMode>
-		<App />
-	</React.StrictMode>
-)
+		<MainLayout />
+	</React.StrictMode>,
+);

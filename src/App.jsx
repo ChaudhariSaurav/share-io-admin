@@ -1,9 +1,15 @@
-import './App.css'
+import Login from "./components/Login";
+import Dashboardpage from "./pages/Dashboardpage";
+import AdminRoutes from "./routes/common";
+import UserStore from "./store/userStore";
 
-export default function App() {
+function App() {
+  const { isLoggedIn } = UserStore(); // Get the login state
+  console.log({ isLoggedIn });
+
   return (
-    <main>
-      React ⚛️ + Vite ⚡ + Replit
-    </main>
-  )
+    <AdminRoutes>{isLoggedIn ? <Dashboardpage /> : <Login />}</AdminRoutes>
+  );
 }
+
+export default App;
