@@ -71,7 +71,7 @@ function Login() {
     }
   };
   return (
-    <div className="flex min-h-screen items-center justify-center">
+    <div className="flex items-center justify-center">
       <div className="w-full max-w-md rounded-lg bg-white p-6">
         {/* Dummy Logo */}
         <div className="mb-4 flex justify-center">
