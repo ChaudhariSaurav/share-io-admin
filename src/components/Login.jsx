@@ -1,7 +1,7 @@
 "use client";
 import { LoaderCircle, Lock, LucideAlertCircle, Mail } from "lucide-react";
 import { useState } from "react";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { userLogin } from "../service/auth";
 
@@ -18,7 +18,7 @@ function Login() {
   const validateForm = () => {
     const newErrors = {};
     if (!formData.identifier) {
-      newErrors.identifier = "Username is required.";
+      newErrors.identifier = "Email is required.";
     }
     if (!formData.password) {
       newErrors.password = "Password is required.";
@@ -48,23 +48,39 @@ function Login() {
       const { identifier, password } = formData;
 
       const user = await userLogin(identifier, password);
-      toast({
-        title: "Login Successful",
-        description: `Welcome back, ${user.displayName || user.email}!`,
-        status: "success",
-        duration: 5000,
-        isClosable: true,
+      toast.success(`Welcome back, ${user.displayName || user.email}!`, {
+        style: {
+          border: "1px solid #713200",
+          padding: "16px",
+          color: "#713200",
+        },
+        iconTheme: {
+          primary: "#713200",
+          secondary: "#FFFAEE",
+        },
       });
 
       navigate("/dashboard");
     } catch (error) {
-      toast({
-        title: "Login Failed",
-        description: error.message || "An error occurred during login.",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        icon: <LucideAlertCircle />,
+      console.error("Login error:", error.message, {});
+      // toast({
+      //   title: "Login Failed",
+      //   description: error.message || "An error occurred during login.",
+      //   status: "error",
+      //   duration: 5000,
+      //   isClosable: true,
+      //   icon: <LucideAlertCircle />,
+      // });
+      toast.error(error.message || "An error occurred during login.", {
+        style: {
+          border: "1px solid #713200",
+          padding: "16px",
+          color: "#713200",
+        },
+        iconTheme: {
+          primary: "#713200",
+          secondary: "#FFFAEE",
+        },
       });
     } finally {
       setLoading(false);
@@ -72,6 +88,7 @@ function Login() {
   };
   return (
     <div className="flex items-center justify-center">
+      <Toaster position="top-right" reverseOrder={false} />
       <div className="w-full max-w-md rounded-lg bg-white p-6">
         {/* Dummy Logo */}
         <div className="mb-4 flex justify-center">
@@ -95,7 +112,7 @@ function Login() {
               </span>
               <input
                 id="email"
-                type="text"
+                type="email"
                 name="identifier"
                 value={formData.identifier}
                 onChange={handleChange}

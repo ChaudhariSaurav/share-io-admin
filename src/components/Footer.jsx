@@ -3,7 +3,7 @@ import { Instagram } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="w-full flex items-center justify-between px-6 py-4 text-sm text-gray-600 border-t bg-white/70 backdrop-blur-lg">
+    <footer className="w-full flex items-center justify-between px-0 py-0 text-sm text-gray-600 border-t bg-white/70 backdrop-blur-lg">
       <div>
         Designed, Developed and Maintained by{" "}
         <span className="font-semibold text-gray-800">

@@ -6,15 +6,14 @@ import Footer from "../components/Footer";
 const MainLayout = () => {
   return (
     <div className="flex flex-col min-h-screen overflow-hidden">
-      {/* Assuming Header height is 64px (h-16) */}
+      {/* Fixed Header */}
       <Header />
 
-      {/* Main grows and scrolls if needed */}
-      <main className="flex-grow overflow-auto">
+      <main className="flex-grow overflow-auto pt-12">
         <App />
       </main>
 
-      {/* Assuming Footer height is 48px (h-12) */}
+      {/* Footer */}
       <Footer />
     </div>
   );

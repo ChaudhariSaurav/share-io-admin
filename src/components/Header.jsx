@@ -1,41 +1,43 @@
-import React, { useEffect, useState } from "react";
+// src/components/Header.js
+import React from "react";
+import useUserStore from "../store/userStore";
 import { userSignOutPage } from "../service/auth";
+import { LogOut } from "lucide-react"; // Logout icon
 
 const Header = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  // Check if 'User-data' is in localStorage on component mount
-  useEffect(() => {
-    const userData = localStorage.getItem("User-data");
-    if (userData) {
-      setIsLoggedIn(true); // User is logged in
-    } else {
-      setIsLoggedIn(false); // User is not logged in
-    }
-  }, []);
+  const { isLoggedIn, user, clearUser } = useUserStore();
 
   const handleLogout = async () => {
-    await userSignOutPage(); // Perform sign-out
-    setIsLoggedIn(false); // Update the state to reflect the logout status
+    try {
+      await userSignOutPage(); // sign out from backend/auth
+      clearUser(); // clear Zustand store
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
   };
 
   return (
-    <header className="sticky top-0 z-20 bg-white/70 backdrop-blur-lg shadow-sm border-b p-3 sm:p-6 lg:p-3">
-      <div className="flex items-center justify-between">
-        {/* Left side: Title */}
-        <div>
-          <h1 className="text-2xl font-semibold text-gray-800">Admin Panel</h1>
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white/10 backdrop-blur-md border-t shadow-md">
+      <div className="max-w-7xl mx-auto flex items-center justify-between p-3 sm:p-3">
+        {/* Left: Logo / Title */}
+        <div className="flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-gray-800">Share IO - Admin</h1>
         </div>
 
-        {/* Right side: Conditionally render the logout button */}
+        {/* Right: User info + logout */}
         {isLoggedIn && (
-          <div>
+          <div className="flex items-center gap-4">
+            {user?.email && (
+              <span className="hidden sm:inline-block text-gray-700 font-medium uppercase">
+                Hi, {user.email.split("@")[0]}
+              </span>
+            )}
             <button
-              type="submit"
-              className="text-lg cursor-pointer font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2 transition duration-300 ease-in-out"
               onClick={handleLogout}
+              className="flex cursor-pointer items-center gap-1 text-white bg-blue-600 hover:bg-blue-700 rounded-lg px-3 py-2 transition"
             >
-              Log Out
+              <LogOut size={16} />{" "}
+              <span className="hidden sm:inline">Logout</span>
             </button>
           </div>
         )}
